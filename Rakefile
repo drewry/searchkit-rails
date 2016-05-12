@@ -1,4 +1,6 @@
+#!/usr/bin/env rake
 require 'bundler/gem_tasks'
+require 'rspec/core'
 require 'rspec/core/rake_task'
 
 def copy_searchkit_asset(webpack_file, destination_file)

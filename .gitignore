@@ -3,6 +3,5 @@
 pkg
 doc
 Gemfile.lock
-dummy
 searchkit-builds/node_modules
 searchkit-builds/build
