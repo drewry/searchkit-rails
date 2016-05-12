@@ -12,27 +12,44 @@ module Searchkit
         desc: 'Skip Git keeps'
 
       def inject_searchkit
-        require_searchkit = "//= require searchkit\n"
+        require_searchkit_js  = "//= require searchkit\n"
+        require_searchkit_css = "*= require searchkit\n"
 
-        if manifest.exist?
-          manifest_contents = File.read(manifest)
+        # Inject on js
+        if js_manifest.exist?
+          manifest_contents = File.read(js_manifest)
 
-          if match = manifest_contents.match(/\/\/=\s+require\s+turbolinks\s+\n/)
-            inject_into_file manifest, require_searchkit, { after: match[0] }
-          elsif match = manifest_contents.match(/\/\/=\s+require_tree[^\n]*/)
-            inject_into_file manifest, require_searchkit, { before: match[0] }
+          if match = manifest_contents.match(/\/\/=\s+require\s+react\s+\n/)
+            inject_into_file js_manifest, require_searchkit_js, { before: match[0] }
           else
-            append_file manifest, require_searchkit
+            append_file js_manifest, require_searchkit_js
           end
         else
-          create_file manifest, require_searchkit
+          create_file js_manifest, require_searchkit_js
+        end
+
+        # Inject on css
+        if css_manifest.exist?
+          manifest_contents = File.read(css_manifest)
+
+          if match = manifest_contents.match(/\/\/=\s+require_tree[^\n]*/)
+            inject_into_file css_manifest, require_searchkit_css, { after: match[0] }
+          else
+            append_file css_manifest, require_searchkit_css
+          end
+        else
+          create_file css_manifest, require_searchkit_css
         end
       end
 
       private
 
-      def manifest
+      def js_manifest
         Pathname.new(destination_root).join('app/assets/javascripts', 'application.js')
+      end
+
+      def css_manifest
+        Pathname.new(destination_root).join('app/assets/stylesheets', 'application.css')
       end
     end
   end

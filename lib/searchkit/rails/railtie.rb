@@ -12,8 +12,7 @@ module Searchkit
         asset_variant = Searchkit::Rails::AssetVariant.new({ variant: app.config.searchkit.variant })
 
         sprockets_env = app.assets || app.config.assets # sprockets-rails 3.x attaches this at a different config
-        sprockets_env.version = [sprockets_env.version, "searchkit-#{asset_variant.searchkit_build}",].compact.join('-')
-
+        sprockets_env.version = [sprockets_env.version, "searchkit-#{asset_variant.searchkit_build}"].compact.join('-')
       end
 
       initializer "searchkit_rails.set_variant", after: :engines_blank_point, group: :all do |app|
