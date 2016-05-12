@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_dependency 'rails', '>= 4.2'
+  s.add_dependency 'react-rails', '>= 1.7'
 
   s.add_development_dependency('bundler')
   s.add_development_dependency('rake')
